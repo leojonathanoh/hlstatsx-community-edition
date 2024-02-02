@@ -1182,6 +1182,14 @@ sub getPlayerInfo
                     $userid = -3;
                 }
             }
+        } else {
+            if ($g_servers{$s_addr}->{play_game} == CS2()) {
+                # leo - Workaround for bad logging from CS2 where first non-bot player may be assigned userid of `0`. By setting userid > 0, the player object will be created at the end of the function
+                #       E.g. L 02/01/2024 - 21:02:01.253 - "X<0><[U:Y]><>" entered the game
+                if ($userid == 0) {
+                    $userid = 0.1;
+                }
+            }
         }
 		
 		if ($g_mode eq "NameTrack") {
